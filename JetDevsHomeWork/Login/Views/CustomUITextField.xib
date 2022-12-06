@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="CustomUITextField" customModule="JetDevsHomeWork" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1B-Vv-NgE">
+                    <rect key="frame" x="5" y="12" width="404" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placholder" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Jc-g0-0hT">
+                            <rect key="frame" x="15" y="8" width="381" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="6Jc-g0-0hT" secondAttribute="trailing" constant="8" id="KQh-x7-g70"/>
+                        <constraint firstAttribute="bottom" secondItem="6Jc-g0-0hT" secondAttribute="bottom" constant="8" id="TfK-jN-V7r"/>
+                        <constraint firstItem="6Jc-g0-0hT" firstAttribute="top" secondItem="u1B-Vv-NgE" secondAttribute="top" constant="8" id="U5q-3Y-c6m"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCX-bO-Epg">
+                    <rect key="frame" x="15" y="2" width="45.5" height="20"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qra-IJ-JZy">
+                            <rect key="frame" x="5" y="2" width="35.5" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="qra-IJ-JZy" secondAttribute="bottom" constant="2" id="A6M-Ue-v9R"/>
+                        <constraint firstItem="qra-IJ-JZy" firstAttribute="leading" secondItem="BCX-bO-Epg" secondAttribute="leading" constant="5" id="BaC-Pf-A49"/>
+                        <constraint firstAttribute="trailing" secondItem="qra-IJ-JZy" secondAttribute="trailing" constant="5" id="XHh-xy-2Nw"/>
+                        <constraint firstItem="qra-IJ-JZy" firstAttribute="top" secondItem="BCX-bO-Epg" secondAttribute="top" constant="2" id="cOH-OS-4z4"/>
+                        <constraint firstAttribute="height" constant="20" id="s1p-g7-sJ4"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="u1B-Vv-NgE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="23H-ng-l0A"/>
+                <constraint firstAttribute="trailing" secondItem="u1B-Vv-NgE" secondAttribute="trailing" constant="5" id="7Xw-PW-w6u"/>
+                <constraint firstItem="BCX-bO-Epg" firstAttribute="top" secondItem="u1B-Vv-NgE" secondAttribute="top" constant="-10" id="ADd-Yf-821"/>
+                <constraint firstItem="BCX-bO-Epg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Ig8-6c-vt5"/>
+                <constraint firstItem="u1B-Vv-NgE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="QMY-PG-hGO"/>
+                <constraint firstItem="6Jc-g0-0hT" firstAttribute="leading" secondItem="qra-IJ-JZy" secondAttribute="leading" id="cAF-eB-R7d"/>
+                <constraint firstAttribute="bottom" secondItem="u1B-Vv-NgE" secondAttribute="bottom" constant="5" id="gIx-9u-Jt7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="lblTitle" destination="qra-IJ-JZy" id="Mi5-kI-ba0"/>
+                <outlet property="txtfield" destination="6Jc-g0-0hT" id="Aol-rn-Htu"/>
+                <outlet property="viewContainer" destination="u1B-Vv-NgE" id="B6J-Nx-YKn"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="-213.95089285714286"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
