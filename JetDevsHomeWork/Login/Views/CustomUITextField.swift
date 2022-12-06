@@ -6,16 +6,25 @@
 //
 
 import UIKit
+import RxCocoa
 
 class CustomUITextField: UIView {
 
-    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet private weak var lblTitle: UILabel!
     
     @IBOutlet weak var txtfield: UITextField!
     
-    @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet private weak var viewContainer: UIView!
     
-    static func instanciate() -> CustomUITextField?{
+    @IBOutlet private weak var lblErrorMessage: UILabel!
+        
+    lazy var textValidator: Validator = {
+        return Validator()
+    }()
+    
+    var isValidated: ((Bool) -> ())? = nil
+    
+    static func instanciate() -> CustomUITextField? {
         
         guard
             let nib = Bundle.main.loadNibNamed("CustomUITextField", owner: nil, options: nil)
@@ -35,13 +44,34 @@ class CustomUITextField: UIView {
         
     }
     
-    func setup(placeholder : String){
+    fileprivate func setupValidator(_ validationRule: Validator.ValidationRule) {
+        _ = txtfield.rx.controlEvent(.editingChanged).asObservable().subscribe { [weak self] _ in
+            
+            guard let `self` = self else {
+                return
+            }
+            
+            if let text = self.txtfield.text {
+                let isTextValidated = self.textValidator.validate(text, rule: validationRule)
+                self.isValidated?(isTextValidated)
+                self.lblErrorMessage.isHidden = isTextValidated
+            }
+        }
+    }
+    
+    func setup(placeholder: String, validationRule: Validator.ValidationRule, errorMessage: String, isValidated : ((Bool) -> ())? = nil) {
         
+        self.isValidated = isValidated
         lblTitle.text = placeholder
         txtfield.placeholder = placeholder
         viewContainer.layer.borderColor = UIColor.lightGray.cgColor
         viewContainer.layer.borderWidth = 0.75
-        
+        lblErrorMessage.text = errorMessage
+        setupValidator(validationRule)
+    }
+    
+    func showErrorMessage(_ message: String) {
+        self.lblErrorMessage.text = message
     }
     
 }
