@@ -10,11 +10,12 @@ import Kingfisher
 
 class AccountViewController: UIViewController {
 
-	@IBOutlet weak var nonLoginView: UIView!
-	@IBOutlet weak var loginView: UIView!
-	@IBOutlet weak var daysLabel: UILabel!
-	@IBOutlet weak var nameLabel: UILabel!
-	@IBOutlet weak var headImageView: UIImageView!
+	@IBOutlet private weak var nonLoginView: UIView!
+	@IBOutlet private weak var loginView: UIView!
+	@IBOutlet private weak var daysLabel: UILabel!
+	@IBOutlet private weak var nameLabel: UILabel!
+	@IBOutlet private weak var headImageView: UIImageView!
+    
 	override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +26,11 @@ class AccountViewController: UIViewController {
     }
 	
 	@IBAction func loginButtonTap(_ sender: UIButton) {
+        
+        let loginVc: UIViewController = LoginViewController()
+        loginVc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(loginVc, animated: true)
+        
 	}
 	
 }
