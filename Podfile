@@ -8,7 +8,7 @@ target 'JetDevsHomeWork' do
   pod 'SwiftLint'
   pod 'Kingfisher'
   pod 'SnapKit'
-
+  pod 'RxCocoa', '5.1.0'
   target 'JetDevsHomeWorkTests' do
     inherit! :search_paths
   end
