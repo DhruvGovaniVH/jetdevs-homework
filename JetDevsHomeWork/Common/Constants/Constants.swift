@@ -22,7 +22,10 @@ let tabBarHeight: CGFloat = isIPhoneX ? (tabBarTrueHeight+34.0) : tabBarTrueHeig
 let tabBarTrueHeight: CGFloat = 49.0
 
 struct ErrorMessages {
-    private init(){}
+    
+    private init() {
+        
+    }
     static let nullResponse = "Null response recived from server"
     static let incorrectResponseFormat = "returned response from server is not in correct format"
     static let serverError = "server responded with an error"
