@@ -19,16 +19,14 @@ class CustomUITextField: UIView {
     @IBOutlet private weak var lblErrorMessage: UILabel!
     
     var text: String? {
-        get{
-            return txtfield.text
-        }
+        return txtfield.text
     }
         
     lazy var textValidator: Validator = {
         return Validator()
     }()
     
-    var isValidated: ((Bool) -> ())? = nil
+    var isValidated: ((Bool) -> Void)?
     
     static func instanciate() -> CustomUITextField? {
         
@@ -65,7 +63,7 @@ class CustomUITextField: UIView {
         }
     }
     
-    func setup(placeholder: String, validationRule: Validator.ValidationRule, errorMessage: String, isValidated : ((Bool) -> ())? = nil) {
+    func setup(placeholder: String, validationRule: Validator.ValidationRule, errorMessage: String, isValidated: ((Bool) -> Void)? = nil) {
         
         self.isValidated = isValidated
         lblTitle.text = placeholder
