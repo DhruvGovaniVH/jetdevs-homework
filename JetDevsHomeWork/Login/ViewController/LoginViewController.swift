@@ -12,8 +12,8 @@ import RxSwift
 protocol LoginDelegate: AnyObject {
     
     /// Will get invoked when login is successfull
-    /// - Parameter forUser: user model object
-    func loginDidSucceed(forUser: User)
+    /// - Parameter withViewModel: login view model object
+    func loginDidSucceed(withViewModel: LoginViewModel?)
     
 }
 
@@ -31,14 +31,13 @@ class LoginViewController: UIViewController {
 
     // MARK: - Class Properties
     let disposeBag = DisposeBag()
-    lazy var repo = { LoginRepo() }()
     private var textInputValidationStatus = BehaviorRelay(value: (false, false))
     weak var delegate: LoginDelegate?
+    var viewModel: LoginViewModel?
     
     fileprivate func textFieldSetups() {
         if let txtEmail = txtEmail {
             if let txtPassword = txtPassword {
-                
                 stackInputFields.addArrangedSubview(txtEmail)
                 txtEmail.setup(placeholder: "Email", validationRule: .email, errorMessage: "This is a invalid email") { isValidated in
                     self.textInputValidationStatus.accept((isValidated, self.textInputValidationStatus.value.1))
@@ -51,13 +50,21 @@ class LoginViewController: UIViewController {
                 }
                 txtPassword.txtfield.isSecureTextEntry = true
                 txtPassword.txtfield.textContentType = .password
-                
             }
         }
     }
     
     @IBAction func actionclose(_ sender: Any) {
         self.dismiss(animated: true)
+    }
+    
+    fileprivate func viewModelSetups() {
+        viewModel = LoginViewModel(onLogin: {
+            self.delegate?.loginDidSucceed(withViewModel: self.viewModel)
+            self.dismiss(animated: true)
+        }, onShowError: { message in
+            self.showErrorAlert(message)
+        })
     }
     
     override func viewDidLoad() {
@@ -72,46 +79,14 @@ class LoginViewController: UIViewController {
           })
           .disposed(by: disposeBag)
         
+        viewModelSetups()
         // Do any additional setup after loading the view.
     }
-    
-    /// Will invoke the login API and returns the result
-    /// - Parameters:
-    ///   - email: email of user
-    ///   - password: password of user
-    fileprivate func loginUser(_ email: String, _ password: String) {
-        repo.loginUser(email: email, password: password) { userData in
-            DispatchQueue.main.async { [weak self] in
-                
-                guard let `self` = self else {
-                    return
-                }
-                
-                if let userData = userData {
-                    self.delegate?.loginDidSucceed(forUser: userData)
-                    self.dismiss(animated: true)
-                } else {
-                    self.showErrorAlert("Something went wrong! Please try again")
-                }
-            }
-        } onFailure: { errorMessage in
-            DispatchQueue.main.async { [weak self] in
-                guard let `self` = self else {
-                    return
-                }
-                
-                self.showErrorAlert(errorMessage ?? "Something went wrong! Please try again")
-            }
-        }
-    }
-    
+ 
     @IBAction func actionLogin(_ sender: Any) {
         if let email = txtEmail?.text {
-            
             if let password = txtPassword?.text {
-                
-                loginUser(email, password)
-                
+                viewModel?.loginUser(email, password)
             }
         }
     }
