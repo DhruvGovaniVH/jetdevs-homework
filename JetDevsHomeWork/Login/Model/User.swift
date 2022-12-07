@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct UserData: Codable {
+    let user: User
+}
+
 struct User: Codable {
     let userID: Int
     let userName: String
