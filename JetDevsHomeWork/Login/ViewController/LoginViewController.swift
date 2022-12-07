@@ -11,38 +11,31 @@ import RxSwift
 
 protocol LoginDelegate: AnyObject {
     
+    /// Will get invoked when login is successfull
+    /// - Parameter forUser: user model object
     func loginDidSucceed(forUser: User)
     
 }
 
 class LoginViewController: UIViewController {
 
+    // MARK: - UI Properties
     @IBOutlet private weak var stackInputFields: UIStackView!
-    
-    @IBOutlet weak var btnLogin: UIButton!
-    
+    @IBOutlet private weak var btnLogin: UIButton!
     private lazy var txtEmail: CustomUITextField? = {
-        
         return CustomUITextField.instanciate()
-        
     }()
-    
     private lazy var txtPassword: CustomUITextField? = {
-        
         return CustomUITextField.instanciate()
-        
     }()
 
+    // MARK: - Class Properties
     let disposeBag = DisposeBag()
-    
     lazy var repo = { LoginRepo() }()
-    
     private var textInputValidationStatus = BehaviorRelay(value: (false, false))
-    
     weak var delegate: LoginDelegate?
     
     fileprivate func textFieldSetups() {
-        
         if let txtEmail = txtEmail {
             if let txtPassword = txtPassword {
                 
@@ -64,9 +57,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func actionclose(_ sender: Any) {
-        
-        self.navigationController?.popViewController(animated: true)
-        
+        self.dismiss(animated: true)
     }
     
     override func viewDidLoad() {
@@ -75,6 +66,7 @@ class LoginViewController: UIViewController {
         btnLogin.setEnable(false)
         textFieldSetups()
         
+        /// Subscribing to changes of validation status to manage button state
         textInputValidationStatus.subscribe(onNext: { status in
             self.btnLogin.setEnable(status.0 == true && status.1 == true)
           })
@@ -83,9 +75,12 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    /// Will invoke the login API and returns the result
+    /// - Parameters:
+    ///   - email: email of user
+    ///   - password: password of user
     fileprivate func loginUser(_ email: String, _ password: String) {
         repo.loginUser(email: email, password: password) { userData in
-            
             DispatchQueue.main.async { [weak self] in
                 
                 guard let `self` = self else {
@@ -111,7 +106,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func actionLogin(_ sender: Any) {
-        
         if let email = txtEmail?.text {
             
             if let password = txtPassword?.text {
