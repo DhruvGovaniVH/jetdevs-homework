@@ -7,7 +7,7 @@
 
 import Foundation
 
-class APIClient{
+class APIClient {
     
     private let BASEURL = "https://jetdevs.mocklab.io/"
     
@@ -18,7 +18,7 @@ class APIClient{
         return URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
     }()
     
-    func POSTData(withParams : [String : Any], onService : String, handler : @escaping ((Result<Data?,APIError>) -> (Void))){
+    func POSTData(withParams: [String: Any], onService: String, handler: @escaping ((Result<Data?, APIError>) -> Void)) {
         
         guard let apiUrl = URL(string: BASEURL + onService) else {
             handler(.failure(.error("Calling an invalid URL")))
