@@ -18,10 +18,15 @@ class APIClient {
         return URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
     }()
     
+    /// This function will
+    /// - Parameters:
+    ///   - withParams: parameters to pass wth api call
+    ///   - onService: service url endpoint to interact
+    ///   - handler: response handler
     func POSTData(withParams: [String: Any], onService: String, handler: @escaping ((Result<Data?, APIError>) -> Void)) {
         
         guard let apiUrl = URL(string: BASEURL + onService) else {
-            handler(.failure(.error("Calling an invalid URL")))
+            handler(.failure(.error("Calling an invalid service")))
             return
         }
         
@@ -46,20 +51,20 @@ class APIClient {
             }
             
             guard let httpResponse = urlResponse as? HTTPURLResponse else {
-                handler(.failure(.error("Null response recived from server")))
+                handler(.failure(.error(ErrorMessages.nullResponse)))
                 return
             }
             
             if httpResponse.statusCode == 200 {
                 guard let data = data else {
-                    handler(.failure(.error("returned response from server is not in correct format")))
+                    handler(.failure(.error(ErrorMessages.incorrectResponseFormat)))
                     return
                 }
                
                 handler(.success(data))
                
             } else {
-                handler(.failure(.error("server responded with an error")))
+                handler(.failure(.error(ErrorMessages.serverError)))
             }
         }
         
