@@ -9,6 +9,12 @@ import UIKit
 import RxRelay
 import RxSwift
 
+protocol LoginDelegate: NSObject {
+    
+    func loginDidSucceed(forUser: User)
+    
+}
+
 class LoginViewController: UIViewController {
 
     @IBOutlet private weak var stackInputFields: UIStackView!
@@ -29,7 +35,11 @@ class LoginViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     
+    lazy var repo = { LoginRepo() }()
+    
     private var textInputValidationStatus = BehaviorRelay(value: (false, false))
+    
+    weak var delegate: LoginDelegate? = nil
     
     fileprivate func textFieldSetups() {
         
@@ -72,5 +82,43 @@ class LoginViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-
+    
+    fileprivate func loginUser(_ email: String, _ password: String) {
+        repo.loginUser(email: email, password: password) { userData in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                guard let `self` = self else {
+                    return
+                }
+                
+                if let userData = userData {
+                    self.delegate?.loginDidSucceed(forUser: userData)
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.showErrorAlert("Something went wrong! Please try again")
+                }
+            }
+        } onFailure: { errorMessage in
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.showErrorAlert(errorMessage ?? "Something went wrong! Please try again")
+            }
+        }
+    }
+    
+    @IBAction func actionLogin(_ sender: Any) {
+        
+        if let email = txtEmail?.text {
+            
+            if let password = txtPassword?.text {
+                
+                loginUser(email, password)
+                
+            }
+        }
+    }
 }
