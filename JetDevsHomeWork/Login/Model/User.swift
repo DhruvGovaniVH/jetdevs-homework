@@ -8,10 +8,13 @@
 import Foundation
 
 struct UserData: Codable {
+    
     let user: User
+    
 }
 
 struct User: Codable {
+    
     let userID: Int
     let userName: String
     let userProfileURL: String
@@ -23,4 +26,5 @@ struct User: Codable {
         case userProfileURL = "user_profile_url"
         case createdAt = "created_at"
     }
+    
 }
