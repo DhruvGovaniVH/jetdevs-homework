@@ -20,3 +20,10 @@ let statusBarNavigationBarHeight: CGFloat = isIPhoneX ? 88.0 : 64.0
 let tabbarSafeBottomMargin: CGFloat = isIPhoneX ? 34.0 : 0.0
 let tabBarHeight: CGFloat = isIPhoneX ? (tabBarTrueHeight+34.0) : tabBarTrueHeight
 let tabBarTrueHeight: CGFloat = 49.0
+
+struct ErrorMessages {
+    
+    static let nullResponse = "Null response recived from server"
+    static let incorrectResponseFormat = "returned response from server is not in correct format"
+    static let serverError = "server responded with an error"
+}
