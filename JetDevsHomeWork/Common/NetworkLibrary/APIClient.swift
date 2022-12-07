@@ -9,7 +9,7 @@ import Foundation
 
 class APIClient{
     
-    private let BASE_URL = "https://jetdevs.mocklab.io/"
+    private let BASEURL = "https://jetdevs.mocklab.io/"
     
     private lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.default
@@ -18,9 +18,9 @@ class APIClient{
         return URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
     }()
     
-    func POSTData(withParams : [String : Any], onService : String, handler : @escaping ((Result<Data?,APIError>) -> ())){
+    func POSTData(withParams : [String : Any], onService : String, handler : @escaping ((Result<Data?,APIError>) -> (Void))){
         
-        guard let apiUrl = URL(string: BASE_URL + onService) else {
+        guard let apiUrl = URL(string: BASEURL + onService) else {
             handler(.failure(.error("Calling an invalid URL")))
             return
         }
