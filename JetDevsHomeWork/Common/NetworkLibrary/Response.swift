@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Response<T>: Codable where T : Codable{
-    let result: Int
-    let errorMessage: String
-    let data: T
+struct Response<T>: Codable where T: Codable {
+    let result: Int?
+    let errorMessage: String?
+    let data: T?
 
     enum CodingKeys: String, CodingKey {
         case result
