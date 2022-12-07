@@ -9,7 +9,7 @@ import UIKit
 import RxRelay
 import RxSwift
 
-protocol LoginDelegate: NSObject {
+protocol LoginDelegate: AnyObject {
     
     func loginDidSucceed(forUser: User)
     
@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
     
     private var textInputValidationStatus = BehaviorRelay(value: (false, false))
     
-    weak var delegate: LoginDelegate? = nil
+    weak var delegate: LoginDelegate?
     
     fileprivate func textFieldSetups() {
         
@@ -94,7 +94,7 @@ class LoginViewController: UIViewController {
                 
                 if let userData = userData {
                     self.delegate?.loginDidSucceed(forUser: userData)
-                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true)
                 } else {
                     self.showErrorAlert("Something went wrong! Please try again")
                 }
