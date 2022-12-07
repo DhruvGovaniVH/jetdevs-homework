@@ -64,6 +64,12 @@ class LoginViewController: UIViewController {
             self.dismiss(animated: true)
         }, onShowError: { message in
             self.showErrorAlert(message)
+        }, showLoader: {
+            self.btnLogin.setTitle("Loading....", for: .normal)
+            self.btnLogin.isEnabled = false
+        }, hideLoader: {
+            self.btnLogin.setTitle("Login", for: .normal)
+            self.btnLogin.isEnabled = true
         })
     }
     
