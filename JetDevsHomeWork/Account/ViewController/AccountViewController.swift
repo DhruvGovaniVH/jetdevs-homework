@@ -53,12 +53,14 @@ class AccountViewController: UIViewController {
 
 extension AccountViewController: LoginDelegate {
     
-    func loginDidSucceed(forUser: User) {
-
-        loginView.isHidden = false
-        nonLoginView.isHidden = true
-        setupUserDetails(forUser)
-        
+    func loginDidSucceed(withViewModel: LoginViewModel?) {
+        if let user = withViewModel?.loggedInUser {
+            loginView.isHidden = false
+            nonLoginView.isHidden = true
+            setupUserDetails(user)
+        } else {
+            loginView.isHidden = true
+            nonLoginView.isHidden = false
+        }
     }
-    
 }
