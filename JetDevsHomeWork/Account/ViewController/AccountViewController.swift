@@ -27,10 +27,38 @@ class AccountViewController: UIViewController {
 	
 	@IBAction func loginButtonTap(_ sender: UIButton) {
         
-        let loginVc: UIViewController = LoginViewController()
-        loginVc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(loginVc, animated: true)
+        // Will present login modal
+        let loginVc = LoginViewController()
+        loginVc.delegate = self
+        self.present(loginVc, animated: true)
         
 	}
+    
+    /// Will setup the user details
+    /// - Parameter user: user model object
+    func setupUserDetails(_ user: User) {
+        
+        nameLabel.text = user.userName
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        if let date = dateFormatter.date(from: user.createdAt) {
+            let diff = (Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0)
+            daysLabel.text = "Created \(diff) days ago"
+        }
+        
+    }
 	
+}
+
+extension AccountViewController: LoginDelegate {
+    
+    func loginDidSucceed(forUser: User) {
+
+        loginView.isHidden = false
+        nonLoginView.isHidden = true
+        setupUserDetails(forUser)
+        
+    }
+    
 }
