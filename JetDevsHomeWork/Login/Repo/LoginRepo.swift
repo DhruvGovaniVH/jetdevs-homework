@@ -11,7 +11,7 @@ class LoginRepo {
     
     private var apiClient = APIClient()
     
-    func loginUser(email: String, password: String, onSuccess: @escaping ((User?) -> (Void)), onFailure: @escaping ((String?) -> (Void))) {
+    func loginUser(email: String, password: String, onSuccess: @escaping ((User?) -> Void), onFailure: @escaping ((String?) -> Void)) {
         
         let params: [String: Any] = [
             "email": email,
