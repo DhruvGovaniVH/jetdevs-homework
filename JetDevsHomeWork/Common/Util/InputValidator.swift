@@ -14,6 +14,11 @@ class Validator {
         case password = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$"
     }
     
+    /// It will validate the text based on passed
+    /// - Parameters:
+    ///   - text: text to validate
+    ///   - rule: rule to be use to validate
+    /// - Returns: return result of validation
     func validate(_ text: String, rule: ValidationRule) -> Bool {
         
         let textPred = NSPredicate(format: "SELF MATCHES %@", rule.rawValue)
