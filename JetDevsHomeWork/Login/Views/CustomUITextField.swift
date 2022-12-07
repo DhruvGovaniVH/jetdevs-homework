@@ -17,6 +17,12 @@ class CustomUITextField: UIView {
     @IBOutlet private weak var viewContainer: UIView!
     
     @IBOutlet private weak var lblErrorMessage: UILabel!
+    
+    var text: String? {
+        get{
+            return txtfield.text
+        }
+    }
         
     lazy var textValidator: Validator = {
         return Validator()
