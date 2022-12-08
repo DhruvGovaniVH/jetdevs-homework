@@ -17,10 +17,11 @@ protocol CustomError {
 enum APIError: CustomError, Error {
          
     case error(_ message: String)
+    case somethingWentWrong
     
     var errorCode: Int {
         switch self {
-        case .error:
+        case .error, .somethingWentWrong:
             return -1
         }
     }
@@ -29,6 +30,8 @@ enum APIError: CustomError, Error {
         switch self {
         case .error(let msg):
             return msg
+        case .somethingWentWrong:
+            return ErrorMessages.somethingWentWrong
         }
     }
     
