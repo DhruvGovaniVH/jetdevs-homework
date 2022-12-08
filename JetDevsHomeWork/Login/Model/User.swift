@@ -27,4 +27,16 @@ struct User: Codable {
         case createdAt = "created_at"
     }
     
+    func getAccountSince() -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        if let date = dateFormatter.date(from: self.createdAt) {
+            let diff = (Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0)
+            return "Created \(diff) days ago"
+        } else {
+            return ""
+        }
+        
+    }
 }
