@@ -13,7 +13,7 @@ protocol LoginDelegate: AnyObject {
     
     /// Will get invoked when login is successfull
     /// - Parameter withViewModel: login view model object
-    func loginDidSucceed(withViewModel: LoginViewModel?)
+    func loginDidSucceed(withUser: User?)
     
 }
 
@@ -59,12 +59,7 @@ class LoginViewController: UIViewController {
     }
     
     fileprivate func viewModelSetups() {
-        viewModel = LoginViewModel(onLogin: {
-            self.delegate?.loginDidSucceed(withViewModel: self.viewModel)
-            self.dismiss(animated: true)
-        }, onShowError: { message in
-            self.showErrorAlert(message)
-        }, showLoader: {
+        viewModel = LoginViewModel(showLoader: {
             self.btnLogin.setTitle("Loading....", for: .normal)
             self.btnLogin.isEnabled = false
         }, hideLoader: {
@@ -92,7 +87,12 @@ class LoginViewController: UIViewController {
     @IBAction func actionLogin(_ sender: Any) {
         if let email = txtEmail?.text {
             if let password = txtPassword?.text {
-                viewModel?.loginUser(email, password)
+                viewModel?.loginUser(email, password).subscribe(onNext: { userData in
+                    self.delegate?.loginDidSucceed(withUser: userData)
+                    self.dismiss(animated: true)
+                }, onError: { error in
+                    self.showErrorAlert((error as? APIError)?.errorMessage ?? ErrorMessages.somethingWentWrong)
+                }).disposed(by: disposeBag)
             }
         }
     }
