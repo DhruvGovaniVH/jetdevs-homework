@@ -29,4 +29,5 @@ struct ErrorMessages {
     static let nullResponse = "Null response recived from server"
     static let incorrectResponseFormat = "returned response from server is not in correct format"
     static let serverError = "server responded with an error"
+    static let somethingWentWrong = "Something went wrong! Please try again"
 }
