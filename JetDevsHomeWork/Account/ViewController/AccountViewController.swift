@@ -39,13 +39,7 @@ class AccountViewController: UIViewController {
     func setupUserDetails(_ user: User) {
         
         nameLabel.text = user.userName
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        if let date = dateFormatter.date(from: user.createdAt) {
-            let diff = (Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0)
-            daysLabel.text = "Created \(diff) days ago"
-        }
+        daysLabel.text = user.getAccountSince()
         
     }
 	
@@ -53,8 +47,8 @@ class AccountViewController: UIViewController {
 
 extension AccountViewController: LoginDelegate {
     
-    func loginDidSucceed(withViewModel: LoginViewModel?) {
-        if let user = withViewModel?.loggedInUser {
+    func loginDidSucceed(withUser: User?) {
+        if let user = withUser {
             loginView.isHidden = false
             nonLoginView.isHidden = true
             setupUserDetails(user)
